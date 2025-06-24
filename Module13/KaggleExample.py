@@ -11,6 +11,7 @@ filtered_DF=subset[subset["Average IQ"]>100]
 print(filtered_DF)
 
 
+
 #null_mask finding null rows
 null_mask=df.isnull()
 null_count=null_mask.sum()
@@ -19,3 +20,17 @@ print(null_count)
 #removing duplicates
 df.drop_duplicates(keep="first",inplace=True)
 df["Population - 2023"]=df["Population - 2023"].apply(lambda x: float(x.replace(",","")))
+
+#finding the avg of a continent
+avg_iq_per_country=df.groupby('Continent')["Average IQ"].mean()
+
+avg_iq_per_country=avg_iq_per_country.sort_values(ascending=False)
+print(avg_iq_per_country)
+
+#calculate nobel prizes by country. And show countries only with more than 1 nobel
+#you have to use Group By, Sum and sort values
+
+total_nobel_by_country=df.groupby("Country")["Nobel Prices"].sum()
+sorted_total_nobel_by_country=total_nobel_by_country.sort_values(ascending=False)
+sorted_total_nobel_by_country=sorted_total_nobel_by_country[sorted_total_nobel_by_country!=0]
+print(sorted_total_nobel_by_country)
